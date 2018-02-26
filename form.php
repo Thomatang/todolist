@@ -6,7 +6,9 @@
      }
      else{
          $formdata = array(
-             'todoitem' => $_POST['todoitem']);
+             'todoitem' => $_POST['todoitem'],
+             'status' => "Todooz"
+         );
         $filetxt = 'todo.json';
 
         // pull data from json file before adding nex data into it
@@ -24,14 +26,7 @@
     else echo 'Unable to save data in "todo.json"';
      }  
 }
-
-// pull data from json file before adding nex data into it
-        $str = file_get_contents($filetxt);
-        //decode pulled data
-        $jsonTodooz = json_decode($str,true);
-
 ?>
-
 
 <!doctype html>
 <html>
@@ -46,11 +41,37 @@
    Add a task <input type="text" name="todoitem" id="todoitem" /><br />
      <input type="submit" id="submit" value="Send" />
   </form>
-  <?php 
-  // Loop through colors array
-foreach($jsonTodooz as $value){
-    echo '<div class="todocard">'.$value['todoitem'].'<span class="close">X</span>'.'</div>' . '<br>';
-}
- ?>
+
+  <h2>Todooz</h2>
+        <?php 
+        // pull data from json file before adding nex data into it
+                $str = file_get_contents($filetxt);
+                //decode pulled data
+                $jsonTodooz = json_decode($str,true);
+        // Loop through array
+        foreach($jsonTodooz as $value){
+            echo '<div class="todocard">'.$value['todoitem'].'<div class="archive">Archive</div>'.'<span class="close">X</span>'.'</div>' . '<br>';
+        }
+        ?>
+
+ <h2>Archived</h2>
+    <?php
+    // pull data from json file before adding nex data into it
+            $str = file_get_contents($filetxt);
+            //decode pulled data
+            $jsonTodooz = json_decode($str,true);
+    
+    foreach($jsonTodooz as $value){
+        if( $value['status']==='Archived'){
+        echo '<div class="archivedcard">'.$value['todoitem'].'<span class="close">X</span>'.'</div>' . '<br>';
+    }
+    }     
+    ?>
+
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
 </body>
 </html>
