@@ -1,0 +1,21 @@
+.todocard{
+    background-color: red;
+    color: aliceblue;
+    display: flex;
+    justify-content: space-between;
+}
+
+.todocard:hover {
+    background: #ddd;
+}
+
+.todocard:checked{
+    text-decoration: line-through;
+    background-color: black;
+}
+
+/* Style the close button */
+.close {
+    padding: 12px 16px 12px 16px;
+    background-color: blue;
+}
