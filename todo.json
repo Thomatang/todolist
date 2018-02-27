@@ -1,18 +1,1 @@
-[
-    {
-        "todoitem": "hello",
-        "status": "Todooz"
-    },
-    {
-        "todoitem": "hello",
-        "status": "Archived"
-    },
-    {
-        "todoitem": "yo",
-        "status": "Todooz"
-    },
-    {
-        "todoitem": "yo",
-        "status": "Todooz"
-    }
-]
+[{"todoitem":"apples","status":"Todooz","id":1519734274},{"todoitem":"eat pizza, vegann","status":"Archived","id":1519737517},{"todoitem":"eat lunch","status":"Todooz","id":1519738990},{"todoitem":"hjgjhgh","status":"Todooz","id":1519740832},{"todoitem":"aller promener le chien","status":"Archived","id":1519746855},{"todoitem":"aller promener le chien","status":"Todooz","id":1519746915},{"todoitem":"aller promener le chien","status":"Todooz","id":1519747117},{"todoitem":"aller promener le chien","status":"Archived","id":1519747260}]

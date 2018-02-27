@@ -1,4 +1,5 @@
 <?php
+$_POST["newJson"]="coucou";
  $filetxt = 'todo.json';
  if(isset($_POST['todoitem'])){
      if(empty($_POST['todoitem'])){
@@ -7,7 +8,8 @@
      else{
          $formdata = array(
              'todoitem' => $_POST['todoitem'],
-             'status' => "Todooz"
+             'status' => "Todooz",
+             'id' => time()
          );
         $filetxt = 'todo.json';
 
@@ -42,6 +44,7 @@
      <input type="submit" id="submit" value="Send" />
   </form>
 
+
   <h2>Todooz</h2>
         <?php 
         // pull data from json file before adding nex data into it
@@ -50,28 +53,72 @@
                 $jsonTodooz = json_decode($str,true);
         // Loop through array
         foreach($jsonTodooz as $value){
-            echo '<div class="todocard">'.$value['todoitem'].'<div class="archive">Archive</div>'.'<span class="close">X</span>'.'</div>' . '<br>';
+            echo '<div class="todocard">'.$value['todoitem'].'<div class="archive" id="' .$value['id'].'">Archive</div>'.'<span class="close">X</span>'.'</div>' . '<br>';
         }
         ?>
 
  <h2>Archived</h2>
     <?php
-    // pull data from json file before adding nex data into it
+    /*// pull data from json file before adding nex data into it
             $str = file_get_contents($filetxt);
             //decode pulled data
-            $jsonTodooz = json_decode($str,true);
+            $jsonTodooz = json_decode($str,true);*/
     
     foreach($jsonTodooz as $value){
         if( $value['status']==='Archived'){
         echo '<div class="archivedcard">'.$value['todoitem'].'<span class="close">X</span>'.'</div>' . '<br>';
     }
-    }     
+    }  
+    
+//passing PHP variable into JavaScript
+echo '<script>';
+echo 'let archiveDump = ' . json_encode($jsonTodooz) . ';';
+echo '</script>';
+
     ?>
-
-
 <script
   src="https://code.jquery.com/jquery-3.3.1.js"
   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
   crossorigin="anonymous"></script>
+  <script>
+  
+  $(".archive").on("click", function() { // change status in aray with javascript
+      for (let i =0; i<archiveDump.length;i++) {
+          if (archiveDump[i].id == this.id ){
+              archiveDump[i].status= "Archived";
+            //   console.log(archiveDump[i].status);
+          }
+        
+      }
+      
+      // reconvert the array into string
+      let jsonTodooz= JSON.stringify(archiveDump);
+    //   let jsonTodooz2 = archiveDump.serialize();
+    //   console.log(jsonTodooz);
+      //Send back to PHP 
+    //  console.log($.post("ajax.php",{"newJson": jsonTodooz}));
+    $.ajax({
+      url: 'ajax.php',
+      type: 'POST',
+      data: 'json='+jsonTodooz,
+      dataType: 'html',
+      success: function(answer, status) {
+        // let tasks = JSON.parse(answer);
+        console.log(answer)
+        $("div").remove();
+        // answer.forEach()
+        
+      },
+      error: function(result, status, error) {
+        console.log(result, status, error)
+      }
+    });
+  
+
+})  
+    </script>
+    <?php
+ 
+?>
 </body>
 </html>
